@@ -1,0 +1,51 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Homepage</title>
+    <style>
+    .hero {  
+      background-size: cover;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .hero h1 {
+      font-size: 4rem;
+    }
+    .card_format{
+         padding: 40px;
+    }
+    .card_format img {
+      height: 200px;
+      object-fit: cover;
+    }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Welcome To Our HomeMade Products</h1>
+    </section>
+    <div class="container">
+        <div class="row-g-4">
+            <div class="col-md-4">
+                <div class="card_format">
+                   <img src="{% static 'assets/safron.jpg' %}" alt="error">
+                    <div class="card body">
+                        <h5 class="product_name">any</h5>
+                        <p>price=123</p>
+                        <p>Quantity=</p>
+                        <p>available</p>
+                        <button>add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

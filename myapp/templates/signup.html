@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+      .up-contain {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f5f5f5;
+      }
+      
+      .up-body {
+        width: 600px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      
+      .form-container {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .form-group {
+        margin-bottom: 15px;
+      }
+      
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+      }
+      
+      input {
+        width: 90%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      
+      .addbutton {
+        text-align: center;
+        margin-top: 20px;
+      }
+      
+      button {
+      padding: 10px 20px;
+      background-color: transparent;
+      border: 1px solid black;
+      color: black;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    
+    button:hover {
+      background-color: #e0e0e0;
+    }
+    a.sees{
+      color: black;
+      text-decoration: none;
+      text-align:right;
+    }
+    a.sees:hover{
+      color: red;
+    }
+    </style>
+</head>
+<body>
+  <div class="up-contain">
+    <div class="up-body">
+      <h1>Signup For Explore</h1>
+      <form class="form-container" 
+      method="POST">
+      {% csrf_token %}
+      <!-- Name Field -->
+        <div class="form-group">
+          <label for="username"><b>NAME</b></label>
+          <input type="text" id="username" name="username" required placeholder="Enter your name">
+        </div>
+
+        <!-- Place Field -->
+        <div class="form-group">
+          <label for="place"><b>PLACE</b></label>
+          <input type="text" id="place" name="place" required placeholder="Enter your place">
+        </div>
+
+        <!-- Age Field -->
+        <div class="form-group">
+          <label for="age"><b>AGE</b></label>
+          <input type="number" id="age" name="age" required placeholder="Enter your age">
+        </div>
+
+        <!-- Phone Number Field -->
+        <div class="form-group">
+          <label for="phoneNumber"><b>PHONE NUMBER</b></label>
+          <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="Enter your phone number">
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email"><b>EMAIL</b></label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password"><b>PASSWORD</b></label>
+          <input type="password" id="password" name="password" required placeholder="Enter your password">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="addbutton">
+          <button type="submit">Submit</button>
+        </div>
+        <div>
+          <a href="{% url 'login'%}" class="sees">Already have an account?login here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
