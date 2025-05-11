@@ -1,0 +1,56 @@
+{% load static %}
+{%include 'navbar1.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+    .hero {  
+      background-size: cover;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .hero h1 {
+      font-size: 4rem;
+    }
+    
+
+    .card_format{
+         padding: 40px;
+    }
+    .card_format img {
+      height: 200px;
+      object-fit: cover;
+    }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>Welcome To Our World</h1>
+    </section>
+    <div class="container">
+        <div class="row-g-4">
+            <div class="col-md-4">
+               <div class="card shadow-sm" style="width: 300px; font-size: 0.9rem;">
+        <img src="{% static 'assets/safron.jpg' %}" class="card-img-top" alt="Product Image" style="height: 150px; object-fit: cover;">
+        <div class="card-body p-2">
+          <h6 class="card-title mb-1">Product Name</h6>
+          <p class="mb-1">Price: ₹123</p>
+          <p class="mb-1">Qty: 10</p>
+          <p class="text-success mb-2">Available</p>
+          <a href="#" class="btn btn-sm btn-primary w-100">Add to Cart</a>
+        </div>
+      </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

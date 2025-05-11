@@ -43,18 +43,25 @@ def login_view(request):
             return render(request, './login.html')   
         user= authenticate(request,username=username,password=password)
         if user is not None:
-            print(user)
             login(request,user)
-            return redirect('home')
+            return redirect('home1')
         else :
             messages.error(request,"invalid password") 
     return render(request, './login.html')
 def home_view(request):
     return render(request,"./home.html")
+def home1_view(request):
+    return render(request,"./home1.html")
 def add_product(request):
     return render(request,"add_product.html")
 def admin_view(request):
     return render(request,"admin_home.html")
+def dashboard_view(request):
+    users=Userdetails.objects.all()
+    context={
+       'users':users,
+         }
+    return render(request,"./admin_dashboard.html",context)
 
 def edit_view(request):
     if not request.user.is_authenticated:
