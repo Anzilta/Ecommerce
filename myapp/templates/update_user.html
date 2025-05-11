@@ -67,51 +67,57 @@
     button:hover {
       background-color: #e0e0e0;
     }
-
+   
     </style>
 </head>
 <body>
   <div class="up-contain">
     <div class="up-body">
-      <h1>Add Product Details</h1>
+      <h1>Edit Profile</h1>
       <form class="form-container" 
       method="POST">
       {% csrf_token %}
-     
+      <!-- Name Field -->
         <div class="form-group">
-          <label for="username"><b>Product Name</b></label>
-          <input type="text" id="username" name="username" required placeholder="Enter your name">
-        </div>
-        <div class="form-group">
-          <label for="place"><b>Product Type</b></label>
-          <input type="text" id="place" name="place" required placeholder="Enter your place">
+          <label for="username"><b>NAME</b></label>
+          <input type="text" id="username" name="username" value="{{user.username}}">
         </div>
 
+        <!-- Place Field -->
         <div class="form-group">
-          <label for="age"><b>Price</b></label>
-          <input type="number" id="age" name="age" required placeholder="Enter your age">
+          <label for="place"><b>PLACE</b></label>
+          <input type="text" id="place" name="place"value="{{user.place}}">
         </div>
 
-      
+        <!-- Age Field -->
         <div class="form-group">
-          <label for="phoneNumber"><b>Quantity</b></label>
-          <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="Enter your phone number">
+          <label for="age"><b>AGE</b></label>
+          <input type="number" id="age" name="age" value="{{user.age}}">
         </div>
 
+        <!-- Phone Number Field -->
         <div class="form-group">
-          <label for="email"><b>Weight</b></label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email">
+          <label for="phoneNumber"><b>PHONE NUMBER</b></label>
+          <input type="text" id="phoneNumber" name="phoneNumber" value="{{user.phoneNumber}}">
         </div>
 
-       
+        <!-- Email Field -->
         <div class="form-group">
-          <label for="password"><b>Image URL</b></label>
-          <input type="password" id="password" name="password" required placeholder="Enter your password">
+          <label for="email"><b>EMAIL</b></label>
+          <input type="email" id="email" name="email"value="{{user.email}}">
         </div>
 
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password"><b>PASSWORD</b></label>
+          <input type="password" id="password" name="password" value="{{user.password}}">
+        </div>
+
+        <!-- Submit Button -->
         <div class="addbutton">
-          <button type="submit">Submit</button>
+          <button type="submit">Update</button>
         </div>
+     
       </form>
     </div>
   </div>
