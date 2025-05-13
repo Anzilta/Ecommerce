@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from .models import Userdetails
 from django.contrib.auth import login,authenticate,logout
@@ -30,13 +30,13 @@ def register(request):
     return render(request,'./signup.html')
 def login_view(request):
     if request.method=='POST':
-
         email=request.POST.get("email")
         password=request.POST.get("password")
-    
+
         try:
             user_obj = Userdetails.objects.get(email=email)
             username = user_obj.username
+            mail= user_obj.email
             print(user_obj)
         except User.DoesNotExist: 
             messages.error(request,"no user with that email")
@@ -44,7 +44,10 @@ def login_view(request):
         user= authenticate(request,username=username,password=password)
         if user is not None:
             login(request,user)
-            return redirect('home1')
+            if mail=='anzilasd@gmail.com':
+              return redirect('admin_dashboard')
+            else :
+                return redirect('home1')
         else :
             messages.error(request,"invalid password") 
     return render(request, './login.html')
@@ -74,18 +77,26 @@ def edit_view(request):
         age=request.POST.get('age')
         phoneNumber=request.POST.get('phoneNumber')
         email=request.POST.get('email')
-        password=request.POST.get('password')
+        # password=request.POST.get('password')
 
         user.username=username
         user.place=place
         user.age=age
-        user.phoneNumeber=phoneNumber
+        user.phoneNumber=phoneNumber
         user.email=email
-        user.password=password
+        # user.password=password
         user.save()
 
-        return redirect("home")
+        return redirect("profile")
     return render(request,'update_user.html',{'user':user}) 
+def delete_view(request , email):
+    user=get_object_or_404(Userdetails,email=email)
+    user.delete()
+    return redirect('admin_dashboard')
+def profile_view(request):
+    return render( request,'./profile.html')
 def logout_view(request):
     logout(request)
-    return redirect("login")   
+    return redirect("login")  
+def image_view(request):
+    return render(request,"./image.html") 

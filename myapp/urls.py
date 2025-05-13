@@ -11,5 +11,9 @@ urlpatterns =[
    path('adminhome/',views.admin_view,name="admin_home"),
    path('admindashboard/',views.dashboard_view,name="admin_dashboard"),
    path('editprofile/',views.edit_view,name="update_user"),
+   path('profile/',views.profile_view,name="profile"),
    path('logout/', views.logout_view, name='logout'),
+   path('delete/<str:email>/',views.delete_view,name="delete"),
+      path('image/',views.image_view,name="image"),
+
 ]
