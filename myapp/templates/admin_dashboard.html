@@ -46,6 +46,10 @@
     .card-box:hover {
       transform: scale(1.02);
     }
+    .image{
+      width: 50px;
+      height: 50px;
+    }
   </style>
 </head>
 <body>
@@ -62,10 +66,7 @@
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card-box bg-primary text-white">
-          <form action="{% url 'image' %}"  style="display:inline;">
-          {% csrf_token %}
-        <button type="submit" class="btn btn-outline-danger">users</button>
-        </form>
+        <h5>USERS</h5>
           <p>Total: 150</p>
         </div>
       </div>
@@ -97,7 +98,7 @@
       <td>{{ user.place }}</td>
       <td>{{ user.phoneNumber }}</td>
       <td>
-        <form action="{% url 'delete' user.email%}" method='POST' style="display:inline;">
+        <form action="{% url 'deleteuser' user.email%}" method='POST' style="display:inline;">
           {% csrf_token %}
         <button type="submit" class="btn btn-outline-danger">Delete</button>
         </form>
@@ -108,13 +109,23 @@
 </table>
     <h4 id="products" class="mt-5">Products</h4>
     <table class="table table-striped">
-      <thead><tr><th>Name</th><th>Price</th><th>Stock</th></tr></thead>
-      <tbody>
-        <tr><td>Pure Honey</td><td>₹250</td><td>45</td></tr>
-        <!-- Add dynamic data -->
-      </tbody>
-    </table>
-
+      <thead><tr><th>Name</th><th>Type</th><th>Price</th><th>Stock</th><th>Weight(in grams)</th><th>image</th></tr></thead>
+      {% for product in products %}
+    <tr>
+      <td>{{ product.product_name }}</td>
+      <td>{{ product.type }}</td>
+      <td>{{ product.price}}</td>
+      <td>{{ product.stock }}</td>
+      <td>{{ product.weight }}g</td>
+      <td><img class="image" src="{{product.image.url}}"  alt="Product Image"></td>
+      <td>
+        <form action="{% url 'deleteproduct' product.id%}" method='POST' style="display:inline;">
+          {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">Delete</button>
+        </form>
+      </td>
+          </tr>
+    {% endfor %}
     <h4 id="reviews" class="mt-5">Product Reviews</h4>
     <table class="table table-striped">
       <thead><tr><th>User</th><th>Product</th><th>Rating</th><th>Comment</th></tr></thead>

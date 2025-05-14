@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>ADD PRODUCT</title>
     <style>
       .up-contain {
         display: flex;
@@ -75,38 +75,38 @@
     <div class="up-body">
       <h1>Add Product Details</h1>
       <form class="form-container" 
-      method="POST">
+      method="POST" enctype="multipart/form-data">
       {% csrf_token %}
      
         <div class="form-group">
-          <label for="username"><b>Product Name</b></label>
-          <input type="text" id="username" name="username" required placeholder="Enter your name">
+          <label for="product_name"><b>Product Name</b></label>
+          <input type="text" id="product_name" name="product_name" required placeholder="Enter your name">
         </div>
         <div class="form-group">
-          <label for="place"><b>Product Type</b></label>
-          <input type="text" id="place" name="place" required placeholder="Enter your place">
+          <label for="type"><b>Product Type</b></label>
+          <input type="text" id="type" name="type" required placeholder="Enter your place">
         </div>
 
         <div class="form-group">
-          <label for="age"><b>Price</b></label>
-          <input type="number" id="age" name="age" required placeholder="Enter your age">
+          <label for="price"><b>Price</b></label>
+          <input type="number" id="price" name="price" required placeholder="Enter your age">
         </div>
 
       
         <div class="form-group">
-          <label for="phoneNumber"><b>Quantity</b></label>
-          <input type="text" id="phoneNumber" name="phoneNumber" required placeholder="Enter your phone number">
+          <label for="stock"><b>Stock</b></label>
+          <input type="text" id="stock" name="stock" required placeholder="">
         </div>
 
         <div class="form-group">
-          <label for="email"><b>Weight</b></label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email">
+          <label for="weight"><b>Weight</b></label>
+          <input type='text' id="weight" name="weight" required placeholder="Enter weight of Product">
         </div>
 
        
         <div class="form-group">
-          <label for="password"><b>Image URL</b></label>
-          <input type="password" id="password" name="password" required placeholder="Enter your password">
+          <label for="image"><b>Image URL</b></label>
+          <input type="file" id="image" name="image" required placeholder="upload product image">
         </div>
 
         <div class="addbutton">

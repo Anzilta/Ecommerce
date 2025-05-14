@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from .models import Userdetails
+from .models import Userdetails ,product_details
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
 
@@ -55,14 +55,14 @@ def home_view(request):
     return render(request,"./home.html")
 def home1_view(request):
     return render(request,"./home1.html")
-def add_product(request):
-    return render(request,"add_product.html")
-def admin_view(request):
-    return render(request,"admin_home.html")
+# def admin_view(request):
+#     return render(request,"admin_home.html")
 def dashboard_view(request):
     users=Userdetails.objects.all()
+    products=product_details.objects.all()
     context={
        'users':users,
+       "products":products,
          }
     return render(request,"./admin_dashboard.html",context)
 
@@ -89,14 +89,43 @@ def edit_view(request):
 
         return redirect("profile")
     return render(request,'update_user.html',{'user':user}) 
-def delete_view(request , email):
+
+def delete_user(request , email):
     user=get_object_or_404(Userdetails,email=email)
     user.delete()
     return redirect('admin_dashboard')
+
+def delete_product(request, product_id):
+    product=get_object_or_404(product_details,id=product_id)
+    product.delete()
+    return redirect("admin_dashboard")
+
 def profile_view(request):
     return render( request,'./profile.html')
+
+def addproduct_view(request):
+    if request.method=='POST':
+        product_name=request.POST.get("product_name")
+        type=request.POST.get('type')
+        weight=request.POST.get('weight')
+        price=request.POST.get('price')
+        stock=request.POST.get('stock')
+        image=request.FILES.get('image')
+        if stock and int(stock) > 0:
+            is_available = True
+        else:
+            is_available = False
+
+        product=product_details.objects.create(product_name=product_name,type=type,weight=weight,price=price,stock=stock,image=image, is_available = is_available)
+        product.save()
+        return redirect('products') 
+    return render  (request,"./add_product.html")
+def product_view(request):
+    products=product_details.objects.all()
+    context={
+        'products':products,
+    }
+    return render(request,"./products.html",context)
 def logout_view(request):
     logout(request)
     return redirect("login")  
-def image_view(request):
-    return render(request,"./image.html") 
