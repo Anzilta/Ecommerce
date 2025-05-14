@@ -103,6 +103,15 @@ def delete_product(request, product_id):
 def profile_view(request):
     return render( request,'./profile.html')
 
+def homeproduct_view(request):
+    products=product_details.objects.all()
+    context={
+        'products':products,
+    }
+    return render(request,"./homeproducts.html",context)
+ 
+
+
 def addproduct_view(request):
     if request.method=='POST':
         product_name=request.POST.get("product_name")

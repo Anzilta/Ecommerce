@@ -11,6 +11,7 @@ urlpatterns =[
    path('home1/',views.home1_view,name="home1"),
    path('addproduct/',views.addproduct_view,name="add_product"),
    path('products/',views.product_view,name="products"),
+    path('homeproducts/',views.homeproduct_view,name="homeproducts"),
    path('admindashboard/',views.dashboard_view,name="admin_dashboard"),
    path('editprofile/',views.edit_view,name="update_user"),
    path('profile/',views.profile_view,name="profile"),
