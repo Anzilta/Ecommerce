@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from .models import Userdetails ,product_details
+from .models import Userdetails ,product_details,CartItem
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
-
+from django.http import HttpResponse
 
 def register(request):
     if request.method=='POST':
@@ -135,6 +135,29 @@ def product_view(request):
         'products':products,
     }
     return render(request,"./products.html",context)
+
+def addtocart_view(request , product_id):
+    product=get_object_or_404(product_details,id=product_id)
+    user=request.user
+
+    cart_items,created=CartItem.objects.get_or_create(user=user,product=product)
+
+    if not created:
+        cart_items.quantity+=1
+        cart_items.save()
+
+    return redirect('cart')
+
+def cart_view(request):
+    cart_items=CartItem.objects.filter(user=request.user)
+    total =sum(item.subtotal() for item in cart_items)
+
+    return render(request,"./cart.html",{'cart_items':cart_items,'total':total})
+        
+# def clear_cart(request):
+#     request.session['cart'] = {}
+#     return HttpResponse("Cart cleared.")
 def logout_view(request):
+   
     logout(request)
     return redirect("login")  

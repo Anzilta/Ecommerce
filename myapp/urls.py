@@ -18,4 +18,8 @@ urlpatterns =[
    path('logout/', views.logout_view, name='logout'),
    path('delete_user/<str:email>/',views.delete_user,name="deleteuser"),
    path('delete_product/<int:product_id>/',views.delete_product,name="deleteproduct"),
+   path('addtocart/<int:product_id>/',views.addtocart_view,name="addtocart"),
+   # path('clear-cart/', views.clear_cart, name='clear_cart'),
+   path('cart/',views.cart_view,name="cart"),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

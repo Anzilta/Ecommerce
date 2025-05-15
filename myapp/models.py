@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class Userdetails(AbstractUser):
     age = models.IntegerField(default=15, blank=True, null=True)
@@ -19,3 +20,14 @@ class product_details(models.Model):
 
     def __str__(self):
         return self.product_name
+class CartItem(models.Model):
+    user= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True,blank=True)
+    product=models.ForeignKey('product_details' ,on_delete=models.CASCADE)
+    quantity=models.PositiveIntegerField(default=1)
+
+
+    def subtotal(self):
+        return self.quantity * self.product.price
+    
+    def __str__(self):
+        return f"{self.product.product_name} x {self.quantity}"

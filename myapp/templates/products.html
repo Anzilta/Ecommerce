@@ -47,7 +47,7 @@
           <p class="mb-1">TYPE:{{product.type}}</p>
           <p class="mb-1">Net.wg:{{product.weight}}g</p>
           <p class="text-success mb-2">Available:{{product.is_available}}</p>
-          <a href="#" class="btn btn-sm btn-primary w-100">Add to Cart</a>
+          <a href="{% url 'addtocart' product.id %}" class="btn btn-sm btn-primary w-100">Add to Cart</a>
         </div>
               </div>
            </div>
