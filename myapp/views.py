@@ -153,6 +153,20 @@ def cart_view(request):
     total =sum(item.subtotal() for item in cart_items)
 
     return render(request,"./cart.html",{'cart_items':cart_items,'total':total})
+def updatecart(request , item_id):
+    item=get_object_or_404(CartItem,id=item_id,user=request.user)
+    action=request.POST.get('action')
+
+    if action=='increment':
+       item.quantity +=1
+    elif action=='decrement' and item.quantity>1:
+        item.quantity-=1
+    item.save()
+    return redirect('cart')
+def deletecartitem(request,item_id):
+    item=get_object_or_404(CartItem,id=item_id,user=request.user)
+    item.delete()
+    return redirect('cart')
         
 # def clear_cart(request):
 #     request.session['cart'] = {}

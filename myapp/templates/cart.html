@@ -109,18 +109,19 @@
             width: 40px;
             height: 30px;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid #ffffff;
             margin: 0 5px;
         }
         
         .remove-btn {
-            color: red;
-            background: none;
-            border: none;
+            color: rgb(255, 0, 0);
+            background:rgb(255, 255, 255);
+            border:1px solid black;
             cursor: pointer;
             font-size: 0.9rem;
             margin-top: 5px;
-            text-decoration: underline;
+            
+    
         }
         
         .summary-item {
@@ -152,8 +153,8 @@
             transition: background-color 0.3s;
         }
         
-        .checkout-btn:hover {
-            background-color: #218838;
+        .remove-btn:hover {
+            background-color: #ff0e0e;
         }
         
         .continue-shopping {
@@ -202,16 +203,27 @@
                             <div class="item-name">{{item.product.product_name}}</div>
                             <div class="item-price">{{item.product.price}}</div>
 
-                            <div class="item-subtotal">{{item.subtotal}}</div>
+
                             <div class="item-quantity">
-                                <button class="quantity-btn">-</button>
+                                <form method='post' action="{% url 'updatecart' item.id %}" style="display: inline;"> 
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="decrement">
+                                <button  type="submit" class="quantity-btn">-</button>
+                                 </form>
                                 <input type="text" value="{{item.quantity}}" class="quantity-input">
-                                <button class="quantity-btn">+</button>
+                                <form method='post' action="{% url 'updatecart' item.id %}" style="display: inline;">
+                                    {% csrf_token %} 
+                                    <input type="hidden" name="action" value="increment">
+                                <button  type="submit" class="quantity-btn">+</button>
+                                 </form>
                             </div>
                         </div>
                         <div>
-                            <div class="item-total">Total: $129.99</div>
-                            <button class="remove-btn">Remove</button> 
+                            <div class="item-total">Total:{{item.subtotal}}</div>
+                            <form method="post" action="{% url 'deletecartitem' item.id %}" style="display: inline;">
+                             {% csrf_token %}
+                                <button type='submit' class="remove-btn">Remove</button> 
+                            </form>
                         </div>
                     </div>
                   </div>
