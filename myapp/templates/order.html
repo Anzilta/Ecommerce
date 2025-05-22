@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .order-box {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .order-box h4 {
+            margin: 0 0 10px;
+            color: #555;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        ul li:last-child {
+            border-bottom: none;
+        }
+        p {
+            margin: 5px 0;
+        }
+        .no-orders {
+            font-style: italic;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Your Orders</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-box">
+                {% load tz %}
+                {% timezone "Asia/Kolkata" %}
+                  <h4>Order #{{ order.id }} - {{ order.created_at|date:"M d, Y H:i" }}</h4>
+                {% endtimezone %}
+
+               
+                <p><strong>Total:</strong> ₹{{ order.totalprice }}</p>
+                <p><strong>Status:</strong> {% if order.is_paid %}Paid{% else %}Pending{% endif %}</p>
+                <ul>
+                    {% for item in order.order_items.all %}
+                        <li>
+                            {{ item.product.product_name }} —  {{item.product.weight}}g — {{ item.quantity }} × ₹{{ item.product.price }} = ₹{{ item.subtotal }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <form method="post" action="{% url 'deliverd' order.id %}">
+                 {% csrf_token %}
+                <button type="submit">Delivered</button>
+                </form>
+                
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-orders">You haven't placed any orders yet.</p>
+    {% endif %}
+
+</body>
+</html>

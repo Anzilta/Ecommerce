@@ -22,5 +22,10 @@ urlpatterns =[
    path('updatecart/<int:item_id>/',views.updatecart,name="updatecart"),
    path('deletecartitem/<int:item_id>/',views.deletecartitem,name='deletecartitem'),
    path('cart/',views.cart_view,name="cart"),
+   path('deliverd/<int:order_id>/', views.deliverd_view, name='deliverd'),
+   path('orderplaced/',views.orderplaced,name='orderplaced'),
+   path('success/',views.success_view,name='success'),
+   path('order/',views.order_view,name='order'),
+   path('history/',views.history_view,name="history")
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

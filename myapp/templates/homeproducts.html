@@ -1,58 +1,312 @@
 {% load static %}
-{%include 'navbar.html' %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <title>Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homemade Products</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-    .hero {  
-      background-size: cover;
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      text-shadow: 2px 2px 4px #000;
-    }
-    .hero h1 {
-      font-size: 4rem;
-    }
-    
-
-    .card_format{
-         padding: 40px;
-    }
-    .card_format img {
-      height: 200px;
-      object-fit: cover;
-    }
+        :root {
+            --primary-color: #5d4037;
+            --secondary-color: #8d6e63;
+            --accent-color: #ff9800;
+            --light-bg: #f5f5f5;
+            --text-color: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static "images/hero-bg.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 50%, rgba(0,0,0,0.7) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .products-container {
+            padding: 2rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .product-wrapper {
+            margin-bottom: 30px;
+        }
+        
+        .product-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+        }
+        
+        .product-detail i {
+            margin-right: 6px;
+            width: 16px;
+            color: var(--secondary-color);
+        }
+        
+        .add-to-cart-btn {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .add-to-cart-btn i {
+            margin-right: 6px;
+        }
+        
+        .availability-yes {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        
+        .availability-no {
+            color: #c62828;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                height: 300px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Hero Section -->
     <section class="hero">
-        <h1>HOMEMADE PRODUCTS</h1>
+        <div class="hero-content">
+            <h1>HOMEMADE PRODUCTS</h1>
+            <p>Handcrafted with love, straight from our kitchen to your home.</p>
+            <a href="{% url 'login' %}" class="btn btn-lg" style="background-color: var(--accent-color); color: white;">Explore Products</a>
+        </div>
     </section>
-    {% for product in products %}
-    <div class="container">
-        <div class="row-g-4">
-            <div class="col-md-4">
-               <div class="card shadow-sm" style="width: 300px; font-size: 0.9rem;">
-        <img src="{{product.image.url}}" class="card-img-top" alt="Product Image" style="height: 150px; object-fit: cover;">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-1">{{product.product_name}}</h6>
-          <p class="mb-1">PRICE:{{product.price}}</p>
-          <p class="mb-1">TYPE:{{product.type}}</p>
-          <p class="mb-1">Net.wg:{{product.weight}}g</p>
-          <p class="text-success mb-2">Available:{{product.is_available}}</p>
-          <a href="#" class="btn btn-sm btn-primary w-100">Add to Cart</a>
+    
+    <!-- Products Section -->
+    <section class="products-container" id="products">
+        <div class="container">
+            <h2 class="section-title">Our Artisanal Collection</h2>
+            
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6 product-wrapper">
+                    <div class="card product-card shadow">
+                        {% if product.is_available %}
+                        <div class="product-badge">In Stock</div>
+                        {% else %}
+                        <div class="product-badge" style="background-color: #c62828;">Out of Stock</div>
+                        {% endif %}
+                        
+                        <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.product_name }}">
+                        
+                        <div class="card-body p-3">
+                            <h5 class="product-title">{{ product.product_name }}</h5>
+                            <div class="product-price">₹{{ product.price }}</div>
+                            
+                            <div class="product-detail">
+                                <i class="fas fa-tag"></i>
+                                <span>{{ product.type }}</span>
+                            </div>
+                            
+                            <div class="product-detail">
+                                <i class="fas fa-weight-hanging"></i>
+                                <span>{{ product.weight }}g</span>
+                            </div>
+                            
+                            <div class="product-detail mb-3">
+                                <i class="fas fa-check-circle"></i>
+                                <span class="{% if product.is_available %}availability-yes{% else %}availability-no{% endif %}">
+                                    {{ product.is_available|yesno:"Available,Not Available" }}
+                                </span>
+                            </div>
+                            
+                            <!-- <a href="{% url 'addtocart' product.id %}" class="btn add-to-cart-btn w-100 {% if not product.is_available %}disabled{% endif %}">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </a> -->
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-box-open fa-4x mb-3" style="color: #ccc;"></i>
+                    <h3>No products available</h3>
+                    <p>Check back later for our homemade products.</p>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-              </div>
-           </div>
+    </section>
+    
+    <!-- Featured Categories or Benefits Section (Optional) -->
+    <section class="bg-light py-5 mt-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <i class="fas fa-leaf fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h4>100% Natural</h4>
+                        <p>Made with carefully selected natural ingredients, free from artificial additives.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <i class="fas fa-heart fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h4>Handmade with Love</h4>
+                        <p>Each product is crafted with attention to detail and personal care.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <i class="fas fa-truck fa-3x mb-3" style="color: var(--primary-color);"></i>
+                        <h4>Fast Delivery</h4>
+                        <p>We ensure your products reach you fresh and in perfect condition.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
- {% endfor %}
+    </section>
+    
+    <!-- Bootstrap and other scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Optional JavaScript for enhancing UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

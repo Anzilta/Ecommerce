@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
-from .models import Userdetails ,product_details,CartItem
+from .models import Userdetails ,product_details,CartItem,OrderDetails,OrderItem,History,HistoryItem
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from decimal import Decimal
 
 def register(request):
     if request.method=='POST':
@@ -167,10 +167,62 @@ def deletecartitem(request,item_id):
     item=get_object_or_404(CartItem,id=item_id,user=request.user)
     item.delete()
     return redirect('cart')
-        
-# def clear_cart(request):
-#     request.session['cart'] = {}
-#     return HttpResponse("Cart cleared.")
+
+def orderplaced(request):
+    Cart_Items=CartItem.objects.filter(user=request.user)
+    total =sum(item.subtotal() for item in Cart_Items)
+
+    order=OrderDetails.objects.create(user=request.user,totalprice=Decimal(total),is_paid=False)
+    for item in Cart_Items:
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity,
+            price=item.product.price
+        )
+    Cart_Items.delete() 
+    return redirect('success')
+
+
+def success_view(request):
+    return render(request,"./success.html")
+
+def deliverd_view(request , order_id):
+    if request.method=='POST':
+      
+        details=get_object_or_404(OrderDetails,id=order_id)
+        history=History.objects.create(
+        user=details.user,
+        totalprice=details.totalprice,
+        created_at=details.created_at,
+        is_paid=True)
+
+        for item in details.order_items.all():
+            HistoryItem.objects.create(
+                history=history,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.price
+            )
+        details.delete()
+        return redirect("history")
+    return render (request,"./order.html")
+
+def history_view(request):
+    history=History.objects.all()
+    context={
+        'history':history,
+    }
+    return render(request,'./history.html',context)
+    
+
+def order_view(request):
+    orders=OrderDetails.objects.all()
+    context={
+        'orders':orders,
+    }
+    return render(request,'./order.html',context)
+
 def logout_view(request):
    
     logout(request)

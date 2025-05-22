@@ -29,28 +29,49 @@
       height: 200px;
       object-fit: cover;
     }
+    .image{
+      background-size: cover;
+      background-position: center;
+      height: 650px;
+       clip-path: polygon(
+    0 0,       /* Top-left */
+    100% 0,    /* Top-right */
+    100% 80%,  /* Bottom-right before triangle */
+    50% 110%,  /* Triangle tip in the center bottom */
+    0 80%      /* Bottom-left before triangle */
+  );
+  opacity: 80%;
+    }
+  .state h1{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(56, 54, 54); /* or black depending on image */
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: transparent; /* Optional: for better readability */
+  padding: 10px 20px;
+   text-shadow: 
+    1px 1px 0 #b5d8be,
+    2px 2px 0 #d6eadc,
+    3px 3px 0 #b1f1bc;
+
+  
+ 
+  }
     </style>
 </head>
-<body>
-    <section class="hero">
-        <h1>Welcome To Our World</h1>
-    </section>
-    <!-- <div class="container">
-        <div class="row-g-4">
-            <div class="col-md-4">
-               <div class="card shadow-sm" style="width: 300px; font-size: 0.9rem;">
-        <img src="{% static 'assets/safron.jpg' %}" class="card-img-top" alt="Product Image" style="height: 150px; object-fit: cover;">
-        <div class="card-body p-2">
-          <h6 class="card-title mb-1">Product Name</h6>
-          <p class="mb-1">Price: ₹123</p>
-          <p class="mb-1">Qty: 10</p>
-          <p class="text-success mb-2">Available</p>
-          <a href="#" class="btn btn-sm btn-primary w-100">Add to Cart</a>
-        </div>
-      </div>
-            </div>
-        </div>
-    </div> -->
+<body><div>
+  <div class="image">
+    <img src="/static/assets/home4.jpg" >
+  </div>
+    <div class="state">
+      <h1>Discover the warmth of handmade — thoughtfully crafted, naturally sourced products made with care from our home to yours</h4>
+  </div>
+  
+</div>
 
 </body>
 </html>

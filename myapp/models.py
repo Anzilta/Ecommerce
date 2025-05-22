@@ -31,3 +31,41 @@ class CartItem(models.Model):
     
     def __str__(self):
         return f"{self.product.product_name} x {self.quantity}"
+    
+class OrderDetails(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    totalprice=models.DecimalField(max_digits=10,decimal_places=2)
+    created_at=models.DateTimeField(auto_now_add=True)
+    is_paid=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"order #{self.id} by {self.user.username}"
+    
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(OrderDetails, related_name='order_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(product_details, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # snapshot price at order time
+
+    def subtotal(self):
+        return self.quantity * self.price
+
+
+class History(models.Model):
+    user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    totalprice=models.DecimalField(max_digits=10,decimal_places=2)
+    created_at=models.DateTimeField(auto_now_add=True)
+    is_paid=models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"order #{self.id} by {self.user.username}"
+
+class HistoryItem(models.Model):
+    history = models.ForeignKey(History, related_name='history_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(product_details, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def subtotal(self):
+        return self.quantity * self.price
